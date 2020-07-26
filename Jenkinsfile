@@ -4,7 +4,7 @@ pipeline {
     stage('checkout') {
       steps {
         dir(path: 'checkout') {
-          git(url: 'https://github.com/spring-projects/spring-petclinic.git', branch: 'master')
+          git(url: 'https://github.com/spring-projects/spring-petclinic.git', branch: 'main')
         }
 
       }
