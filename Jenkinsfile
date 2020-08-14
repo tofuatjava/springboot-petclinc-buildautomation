@@ -13,9 +13,10 @@ pipeline {
     stage('build') {
       steps {
         dir(path: 'checkout') {
-          sh './mvnw package'
+          withMaven(maven: 'maven:latest', mavenSettingsConfig: '133c5646-7793-4964-9278-c9aa49b048ce') {
+            sh 'mvn package'
+          }
         }
-
       }
     }
 
