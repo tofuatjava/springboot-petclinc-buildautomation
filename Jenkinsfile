@@ -1,5 +1,10 @@
 pipeline {
   agent any
+  
+  options {
+    buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '5', numToKeepStr: '5')
+  }
+  
   stages {
     stage('checkout') {
       steps {
@@ -11,10 +16,10 @@ pipeline {
 
     stage('build') {
       steps {
-        sh 'java --version'
+        sh 'java -version'
         dir(path: 'checkout') {
           withMaven(maven: 'maven:latest', mavenSettingsConfig: '133c5646-7793-4964-9278-c9aa49b048ce') {
-            sh 'mvn --version'
+            sh 'mvn -version'
             sh 'mvn package'
           }
         }
