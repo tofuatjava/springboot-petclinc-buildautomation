@@ -42,7 +42,7 @@ pipeline {
         dir(path: 'checkout') {
           withSonarQubeEnv('sonar-sonarqube') {
             withMaven(maven: 'maven:latest', mavenSettingsConfig: '133c5646-7793-4964-9278-c9aa49b048ce') {
-              sh 'mvn sonar:sonar'
+              sh 'mvn sonar:sonar -Dsonar.dependencyCheck.xmlReportPath=dependency-check-report.xml'
             }
           }
         }
