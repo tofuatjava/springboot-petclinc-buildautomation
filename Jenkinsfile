@@ -26,6 +26,17 @@ pipeline {
       }
     }
     
+    stage('Dependency Check') {
+      steps {
+        dependencyCheck additionalArguments: '--scan checkout', odcInstallation: 'dependency-check:latest'
+      }
+      post {
+        success {
+          dependencyCheckPublisher patter: ''
+        }
+      }
+    }
+    
     stage('Analysing Quality') {
       steps {
         dir(path: 'checkout') {
