@@ -20,7 +20,7 @@ pipeline {
       steps {
         dir(path: 'checkout') {
           withMaven(maven: 'maven:latest', mavenSettingsConfig: '133c5646-7793-4964-9278-c9aa49b048ce') {
-            sh 'mvn package -DskipTests'
+            sh 'mvn package'
           }
         }
       }
@@ -29,10 +29,18 @@ pipeline {
     stage('Dependency Check') {
       steps {
         dependencyCheck additionalArguments: '--scan checkout', odcInstallation: 'dependency-check:latest'
+        dir(path: 'checkout') {
+          withMaven(maven: 'maven:latest', mavenSettingsConfig: '133c5646-7793-4964-9278-c9aa49b048ce') {
+            sh 'mvn org.cyclonedx:cyclonedx-maven-plugin:makeAggregateBom'
+          }
+        } 
       }
       post {
         success {
           dependencyCheckPublisher pattern: ''
+          dir(path: 'checkout') {
+            dependencyTrackPublisher artifact: 'target/bom.xml', synchronous: false
+          }
         }
       }
     }
