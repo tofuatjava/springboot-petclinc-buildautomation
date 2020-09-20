@@ -29,7 +29,7 @@ pipeline {
     stage('Analysing Quality') {
       steps {
         dir(path: 'checkout') {
-          withSonarQubeEnv {
+          withSonarQubeEnv('sonar-sonarqube') {
             withMaven(maven: 'maven:latest', mavenSettingsConfig: '133c5646-7793-4964-9278-c9aa49b048ce') {
               sh 'mvn sonar:sonar'
             }
