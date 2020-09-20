@@ -1,5 +1,7 @@
 pipeline {
-  agent any
+  agent {
+    label "maven&&container&&linux"
+  }
   
   options {
     buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '5', numToKeepStr: '5')
