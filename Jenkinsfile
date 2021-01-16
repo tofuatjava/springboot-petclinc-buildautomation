@@ -19,7 +19,7 @@ pipeline {
     stage('build') {
       steps {
         dir(path: 'checkout') {
-          withMaven(maven: 'maven:latest', mavenSettingsConfig: '133c5646-7793-4964-9278-c9aa49b048ce') {
+          withMaven(maven: 'maven:latest') {
             sh 'mvn package'
           }
         }
@@ -28,16 +28,16 @@ pipeline {
     
     stage('Dependency Check') {
       steps {
-        dependencyCheck additionalArguments: '--scan checkout', odcInstallation: 'dependency-check:latest'
+        //dependencyCheck additionalArguments: '--scan checkout', odcInstallation: 'dependency-check:latest'
         dir(path: 'checkout') {
-          withMaven(maven: 'maven:latest', mavenSettingsConfig: '133c5646-7793-4964-9278-c9aa49b048ce') {
+          withMaven(maven: 'maven:latest') {
             sh 'mvn org.cyclonedx:cyclonedx-maven-plugin:makeAggregateBom'
           }
         } 
       }
       post {
         success {
-          dependencyCheckPublisher pattern: ''
+          //dependencyCheckPublisher pattern: ''
           dir(path: 'checkout') {
             dependencyTrackPublisher artifact: 'target/bom.xml', projectId: '692a7bb6-1804-4a4a-9627-6da22bda148a', synchronous: false
           }
@@ -49,7 +49,7 @@ pipeline {
       steps {
         dir(path: 'checkout') {
           withSonarQubeEnv('sonar-sonarqube') {
-            withMaven(maven: 'maven:latest', mavenSettingsConfig: '133c5646-7793-4964-9278-c9aa49b048ce') {
+            withMaven(maven: 'maven:latest') {
               sh 'mvn sonar:sonar -Dsonar.dependencyCheck.xmlReportPath=../dependency-check-report.xml'
             }
           }
