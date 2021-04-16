@@ -39,7 +39,7 @@ pipeline {
         success {
           //dependencyCheckPublisher pattern: ''
           dir(path: 'checkout') {
-            dependencyTrackPublisher artifact: 'target/bom.xml', projectId: '692a7bb6-1804-4a4a-9627-6da22bda148a', synchronous: false
+            dependencyTrackPublisher artifact: 'target/bom.xml', synchronous: false
           }
         }
       }
