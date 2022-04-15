@@ -39,7 +39,7 @@ pipeline {
         success {
           //dependencyCheckPublisher pattern: ''
           dir(path: 'checkout') {
-            dependencyTrackPublisher artifact: 'target/bom.xml', autoCreateProjects: true, dependencyTrackApiKey: 'dtrack-token', projectName: 'spingboot-petclinic', projectVersion: '2.5.4', synchronous: true
+            dependencyTrackPublisher artifact: 'target/bom.xml', autoCreateProjects: true, dependencyTrackApiKey: 'dtrack-token', projectName: 'spingboot-petclinic', projectVersion: '2.6.6', synchronous: true
           }
         }
       }
